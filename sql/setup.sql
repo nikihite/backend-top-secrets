@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS secrets;
 CREATE TABLE users (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   email TEXT NOT NULL,
-  password_hash TEXT
+  password_hash TEXT NOT NULL
 );
 
 CREATE TABLE secrets (
