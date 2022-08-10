@@ -62,6 +62,23 @@ describe('backend-express-template routes', () => {
     expect(res.status).toEqual(403);
   });
 
+  it('/users should return 200 if user is admin', async () => {
+    const agent = request.agent(app);
+
+    await agent.post('/api/v1/users').send({
+      email: 'admin',
+      password: '1234',
+    });
+
+    await agent
+      .post('/api/v1/users/sessions')
+      .send({ email: 'admin', password: '1234' });
+
+    const res = await agent.get('/api/v1/users/');
+    console.log(res.body);
+    expect(res.status).toEqual(200);
+  });
+  
   afterAll(() => {
     pool.end();
   });
