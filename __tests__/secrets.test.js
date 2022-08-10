@@ -9,12 +9,11 @@ const mockUser = {
   password: 'august3'
 };
 
-const registerAndLogin = async (userProps = {}) => {
+async (userProps = {}) => {
   const password = userProps.password ?? mockUser.password;
   
   const agent = request.agent(app);
   const user = await UserService.create({ ...mockUser, ...userProps });
-  console.log(user);
   const { email } = user;
   await agent.post('/api/v1/users/sessions').send({ email, password });
   return [agent, user];
@@ -31,7 +30,6 @@ describe('backend-express-template routes', () => {
       .post('/api/v1/users/sessions')
       .send({ email: 'niki@hite.com', password: 'august3' });
     res = await agent.get('/api/v1/secrets');
-    console.log(res.body);
     expect(res.status).toBe(200);
   });
   afterAll(() => {
